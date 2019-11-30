@@ -399,13 +399,10 @@ summary(res)
 
 
 
-# boxplot comparison
+# boxplot comparison (bw means box whisker plot)
 bwplot(res)
 # Dot-plot comparison
 dotplot(res)
-
-
-
 
 #In the models rf has the lowest Mean RMSE and the highest Rsquared
 
@@ -419,7 +416,7 @@ compare_models(lm1, rf1)
 
 
 #Shrinkage/regularization models with caret
-
+#+++++++++++++++++++++++++++++++++++++++++++++
 
 # Here we run a shrinkage/regularization model (method = "glmnet") which has two tuning parameters alpha and lambda. 
 # If alpha is set to 0 this process runs a ridge model, if it’s set to 1 it runs a LASSO model and an alpha between 0 
