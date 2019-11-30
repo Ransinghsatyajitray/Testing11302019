@@ -137,32 +137,34 @@ library(sqldf)
 library(rebus)
 library(scales)
 library(broom)
-
+library(corrplot) #for correlation plot
 
 
 #Machine Learning Libraries
 
-library(caret)
-library(mlbench)  #for sample data
-library(fastAdaboost) 
-library(ipred)
-library(earth)
-library(caTools)
-library(C50)
-library(xgboost)
-library(h2o)
-library(naivebayes)
-library(pls)
-library(randomForest)
-library(rrcov)
-library(elasticnet)
-library(klaR)
-library(gbm)
-library(ellipse)
+#Interesting Note:
+#___________________
+#Every model and every argument in machine learning models startwith small letters 
+#and when there is situation of space its written in Capital without any space
+#eg.fastAdaboost,caTools,trControl,trainControl,tuneGrid, tuneLength, preProcess
 
-
-
-install.packages("glmnet")  #package ‘glmnet’ is not available (for R version 3.5.1)
+library(caret) #8 major arguments, 1. Y~X, data, model=, trControl=trainControl, tuneGrid or tuneLength, preProcess
+library(mlbench)  #for sample data for machine learning
+library(fastAdaboost) #AdaBoost Classification Trees
+library(ipred)      #Stabilized Linear Discriminant Analysis
+library(earth)      #Multivariate Adaptive Regression Spline model
+library(caTools)    #Boosted Logistic Regression	model
+library(C50)        #C50 ensemble model
+library(xgboost)    #Xtreme gradiant boosting
+library(h2o)        #glmnet model
+library(naivebayes) #For Naivebayes models
+library(pls)        #Principal Component Analysis	Models
+library(randomForest)# For Random Forest Models
+library(rrcov)      #Robust Linear Discriminant Analysis models
+library(elasticnet) #elastic-net models
+library(gbm)     #for generalised boosted regression models
+library(ellipse) #for drawing ellipse in feature plots
+library(glmnet)  #For lasso and Elastic-Net Regularized Generalized Linear Model
 
 
 
@@ -235,14 +237,6 @@ rf1$levels
 rf1$terms
 rf1$coefnames
 rf1$xlevels
-
-
-
-
-
-
-
-
 
 
 
@@ -435,17 +429,16 @@ compare_models(lm1, rf1)
 
 
 # load libraries
-library(mlbench)
+#library(mlbench)
 #mlbench contain datasets for machine learning benchmark problems
 
 
-library(caret)
+#library(caret)
 
 # load data
-data(PimaIndiansDiabetes)
+data(PimaIndiansDiabetes) #coming from ml bench package
 # rename dataset to keep code below generic
 dataset <- PimaIndiansDiabetes
-
 
 control <- trainControl(method="repeatedcv", number=10, repeats=3)
 
@@ -456,8 +449,9 @@ metric <- "Accuracy"
 
 
 # Test Metric
-# There are many possible evaluation metrics to chose from. Caret provides a good selection and you can use your own if needed.
-# 
+# There are many possible evaluation metrics to choose from. 
+# Caret provides a good selection and you can use your own if needed.
+# __________________________________________________________________________
 # Some good test metrics to use for different problem types include:
 #   
 # Classification:
@@ -570,7 +564,7 @@ dotplot(res)
 #From the graph it seemed Logistic regression, followed by Linear_Discriminant_Analysis followed by SGB are better for the data
 
 
-#Now perform more indepth analysis into the model with feature selection/engineering , finally predict the best model into the validation data and 
+#Now perform more indepth analysis into the model with feature selection/engineering,finally predict the best model into the validation data and 
 #create confusion matrix
 
 
@@ -668,6 +662,11 @@ library(caret)
 data(PimaIndiansDiabetes)
 # calculate correlation matrix
 correlationMatrix <- cor(PimaIndiansDiabetes[,1:8])
+
+
+library(corrplot)
+corrplot(correlationMatrix, method="color")
+
 # summarize the correlation matrix
 print(correlationMatrix)
 # find attributes that are highly corrected (ideally >0.75)
@@ -753,8 +752,8 @@ plot(results, type=c("g", "o"))
 
 
 # estimate skill of LDA on the validation dataset
-predictions <- predict(fit.lda, validation)
-confusionMatrix(predictions, validation$Species)
+predictions <- predict(fit.lda, PimaIndiansDiabetes)
+confusionMatrix(predictions, PimaIndiansDiabetes$diabetes)
 
 
 
