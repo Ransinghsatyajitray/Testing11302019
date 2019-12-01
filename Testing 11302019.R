@@ -862,3 +862,17 @@ F_meas()
 
 #How to decide on threshold values in Machine Learning
 
+
+
+
+#Guide to deal with Imbalanced Classification Problems in R
+
+
+
+
+
+
+
+
+
+
